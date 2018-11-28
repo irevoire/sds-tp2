@@ -1,0 +1,3 @@
+[submodule "mruby-cgroup"]
+	path = mruby-cgroup
+	url = https://github.com/matsumotory/mruby-cgroup.git
