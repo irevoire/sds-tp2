@@ -10,16 +10,18 @@ end
 puts "\e[31;1mCapabilities before dropping them:\e[m\n"
 p Cap2.process
 
-#Process::Sys.setegid 65534 # nobody
-#Process::Sys.seteuid 65534 # nobody
-
-Cap2.process.disable! [:net_bind_service]
-#Cap2.process.enable :net_bind_service
+Cap2.process.disable! [:net_bind_service, :setgid, :setuid]
 
 puts "\e[31;1mCapabilities after dropping them:\e[m\n"
 p Cap2.process
 
-server = TCPServer.new 82
+#Process::Sys.setegid 65534 # nobody
+#Process::Sys.seteuid 65534 # nobody
+
+puts "\e[31;1mCapabilities after dropping them:\e[m\n"
+p Cap2.process
+
+server = TCPServer.new 84
 loop do
 	client = server.accept
 	p :got_someone
