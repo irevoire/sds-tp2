@@ -38,7 +38,6 @@ module Cap2
 
 		# Enable the given capability for this process.
 		def enable(capability)
-			check_pid
 			@caps[:effective].add(capability)
 			@caps[:permitted].add(capability)
 			@caps[:inheritable].add(capability)
@@ -47,7 +46,6 @@ module Cap2
 
 		# Disable the given capability for this process.
 		def disable(capability)
-			check_pid
 			@caps[:effective].delete(capability)
 			@caps[:permitted].delete(capability)
 			@caps[:inheritable].delete(capability)
@@ -57,12 +55,6 @@ module Cap2
 		private
 		# Raises a RuntimeError if the process's pid is not the same as the current
 		# pid (you cannot enable capabilities for other processes, that's their job).
-		def check_pid
-			unless @pid == ::Process.pid
-				puts 'Cannot modify capabilities of other processes'
-			end
-		end
-
 		def reload
 			@caps = getcaps
 		end

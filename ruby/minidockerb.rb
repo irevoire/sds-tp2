@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require_relative "extend_cap2"
+require_relative "cap2/cap2"
 
 if ARGV.size == 0
 	puts "Give me a command"
@@ -11,23 +11,31 @@ if Process.uid != 0
 	exit 
 end
 
-pid = fork do
-	exec(ARGV.join(" "))
-end
+pid = spawn(ARGV.join(" "))
 
 process = Cap2.process pid
 
 puts "\e[31;1mCapabilities before dropping them:\e[m\n"
+
 p process
 
 #Process::Sys.setegid 65534 # nobody
 #Process::Sys.seteuid 65534 # nobody
 
-sleep 2
-
 process.disable!
 
 puts "\e[31;1mCapabilities after dropping them:\e[m\n"
+p process
+
 p Cap2.process
 
-loop do; end
+require 'socket'
+server = TCPServer.new 84
+loop do
+	client = server.accept
+	p :got_someone
+	client.puts "Hello !"
+	client.puts "Time is #{Time.now}"
+	client.close
+end
+

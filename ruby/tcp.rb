@@ -10,7 +10,7 @@ end
 puts "\e[31;1mCapabilities before dropping them:\e[m\n"
 p Cap2.process
 
-Cap2.process.disable! [:net_bind_service, :setgid, :setuid]
+Cap2.process.disable! # [:net_bind_service]
 
 puts "\e[31;1mCapabilities after dropping them:\e[m\n"
 p Cap2.process

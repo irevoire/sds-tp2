@@ -15,4 +15,12 @@ Nous avons trouvé : [cap2](https://github.com/lmars/cap2)
 Nous avons corrigé la lib.
 
 * On ne peut pas non plus agir sur d'autres process, lorsqu'un donne un PID différent du notre la lib le refuse.
+------------
+Nous avons corrigé la lib pour permettre d'agir sur d'autres processus puis la call en C indique "Operation not permitted".
+Après avoir lu la manpage il semblerait qu'il n'est plus possible de changer les capabilities d'autres processus :
+```
+Where  supported  by  the kernel, the function capsetp() should be used with care.  It existed, primarily, to overcome an early lack of support for capabilities in the filesystems
+supported by Linux.  Note that, by default, the only processes that have CAP_SETPCAP available to them are processes started as a kernel thread.  (Typically this includes init(8),
+kflushd and kswapd). You will need to recompile the kernel to modify this default.
+```
 

@@ -129,13 +129,24 @@ VALUE cap2_process_getcaps(VALUE self) {
  */
 VALUE cap2_process_setcaps(VALUE self) {
 	int i;
+	pid_t pid = 0;
 	cap_t cap_d;
 	VALUE caps, cap_array, cap_sym;
 	cap_value_t cap_values[__CAP_COUNT];
 
-	cap_d = cap_init();
-
+	pid = NUM2INT(rb_iv_get(self, "@pid"));
 	caps = rb_iv_get(self, "@caps");
+
+	cap_d = cap_get_pid(pid);
+
+//	cap_d = cap_init();
+
+	if (cap_d == NULL)
+		rb_raise(
+				rb_eRuntimeError,
+				"Failed to get pid: %s\n",
+				strerror(errno)
+			);
 
 	// permitted
 	cap_array = rb_funcall(
@@ -179,10 +190,10 @@ VALUE cap2_process_setcaps(VALUE self) {
 
 	cap_set_flag(cap_d, CAP_INHERITABLE, i, cap_values, CAP_SET);
 
-	if(cap_set_proc(cap_d) == -1) {
+	if(capsetp(pid, cap_d) == -1) {
 		rb_raise(
 				rb_eRuntimeError,
-				"Failed to set capabilities for current process: (%s)\n",
+				"Failed to set capabilities for current process: %s\n",
 				strerror(errno)
 			);
 	} else {
