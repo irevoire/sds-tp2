@@ -16,7 +16,8 @@ Nous avons corrigé la lib.
 
 * On ne peut pas non plus agir sur d'autres process, lorsqu'un donne un PID différent du notre la lib le refuse.
 ------------
-Nous avons corrigé la lib pour permettre d'agir sur d'autres processus puis la call en C indique "Operation not permitted".
+Nous avons corrigé la lib pour permettre d'agir sur d'autres processus.
+Il fallait utiliser la fonction capsetp(pid, struct) plutôt que la fonction puis la call en C indique "Operation not permitted".
 Après avoir lu la manpage il semblerait qu'il n'est plus possible de changer les capabilities d'autres processus :
 ```
 Where  supported  by  the kernel, the function capsetp() should be used with care.  It existed, primarily, to overcome an early lack of support for capabilities in the filesystems
