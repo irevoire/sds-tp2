@@ -1,6 +1,8 @@
 ### Romain Grossemy
 ### Thomas Campistron
 
+[rapport](RAPPORT.md)
+
 # Requirements
 
 We used ruby so you'll need ruby installed (`apt install ruby`, `pacman -Syyuu ruby`, ...).
