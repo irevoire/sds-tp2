@@ -1,8 +1,6 @@
 ### Romain Grossemy
 ### Thomas Campistron
 
-# Part 1
-
 ## Changer les capabilities
 
 Comme tout bon rubyiste qui n'a pas le temps, notre première approche à été de trouver une gemme (librairie) qui permette de dropper des capabilities.
@@ -25,3 +23,10 @@ supported by Linux.  Note that, by default, the only processes that have CAP_SET
 kflushd and kswapd). You will need to recompile the kernel to modify this default.
 ```
 
+## Créer des cgroups
+
+Nous utilisons la librairie `libcgroup`, puis a l'aide d'appel en bash on peut limiter l'utilisation du cpu ou de la mémoire.
+
+### Problème
+
+Pour l'instant on ne peut que limiter la priorité d'un processus pour l'utilisation du CPU.
